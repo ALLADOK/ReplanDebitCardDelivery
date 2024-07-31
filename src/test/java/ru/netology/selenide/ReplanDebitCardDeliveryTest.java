@@ -1,8 +1,8 @@
 package ru.netology.selenide;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.Keys;
 
 import java.time.Duration;
@@ -15,15 +15,26 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class ReplanDebitCardDeliveryTest {
 
-    @BeforeEach
-            void setup(){
-        open("http://localhost:9999");
+    //@BeforeEach
+    //static void setup(){
+      //  open("http://localhost:9999");
+    //}
+
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure",
+                new AllureSelenide());
+    }
+
+    @AfterAll
+    static void tearDownall() {
+        SelenideLogger.removeListener("");
     }
 
     @Test
     @DisplayName("Should successful plan meeting")
     void shouldSuccessfulPlanMeeting() {
-
+        open("http://localhost:9999");
 
         var validUser = DataGenerator.Registration.generateUser("ru");
         var daysToAddForFirstMeeting = 4;
